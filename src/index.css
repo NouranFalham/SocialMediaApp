@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer base {
+  span, a , label {
+    display: inline-block;
+  }
+  html {
+    
+    overflow-x: hidden;
+  }
+}
+@layer components {
+  .btn{
+    @apply cursor-pointer px-4 py-2 rounded-xl space-x-1 border border-gray-400/30
+  }
+  .form-control{
+    @apply w-full text-sm px-4 py-3 pl-11 rounded-xl bg-gray-100 focus:outline-none border border-gray-400/40 focus:border-blue-600 transition-colors duration-200
+  }
+}
+.signUpHero {
+  background-image:  url('./assets/images/N03cZtZYOx.gif');
+  background-position: center;
+  background-size: cover;
+
+}
