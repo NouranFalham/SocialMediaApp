@@ -11,7 +11,7 @@ import {
 
 export default function LeftSidebar() {
     return (
-        <div className="space-y-6 sticky top-6">
+        <div className="space-y-6 sticky top-24">
 
             {/* Profile Card */}
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">

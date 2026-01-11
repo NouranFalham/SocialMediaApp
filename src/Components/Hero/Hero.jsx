@@ -2,7 +2,7 @@ import { faSitrox } from "@fortawesome/free-brands-svg-icons";
 import { faBell, faHeart, faImage, faMessage, faStar, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router";
-import author from "../../assets/images/author.JPEG";
+import author from "../../assets/images/author.jpeg";
 
 export default function Hero({title , description}) {
     const features = [

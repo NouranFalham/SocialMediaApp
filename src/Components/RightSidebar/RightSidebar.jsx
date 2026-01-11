@@ -9,7 +9,7 @@ import {
 
 export default function RightSidebar() {
     return (
-        <div className="space-y-6 sticky top-6">
+        <div className="space-y-6 sticky top-24 ">
 
             {/* Connection Requests */}
             <Card title="Connection Requests">

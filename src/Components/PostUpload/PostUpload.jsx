@@ -88,7 +88,7 @@
 
     return (
         <>
-        <section className="pt-8">
+        <section >
             <div className="container mx-auto max-w-2xl p-5 bg-white rounded-2xl shadow-lg">
             <header className="flex items-center gap-2">
                 <div className="avatar rounded-full border-2 border-gray-500/20">
