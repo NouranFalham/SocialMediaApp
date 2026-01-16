@@ -1,4 +1,5 @@
 import user from '../../assets/images/user.png'
+import DropDown from '../DropDown/DropDown';
 
 export default function CommentCard({commentInfo}) {
 
@@ -12,10 +13,14 @@ export default function CommentCard({commentInfo}) {
             alt="user"
             className="rounded-full size-12 mt-1.5"
         />
-        <div className="comment-body grow">
-            <div className="comment bg-gray-100/80 p-4 rounded-lg ">
-            <h4 className="font-semibold">{commentInfo.commentCreator.name}</h4>
-            <p className="text-gray-600">{commentInfo.content}</p>
+        <div className="comment-body grow ">
+            <div className="comment bg-gray-100/80 p-4 rounded-lg flex items-center justify-between">
+            <div className="">
+                <h4 className="font-semibold">{commentInfo.commentCreator.name}</h4>
+                <p className="text-gray-600">{commentInfo.content}</p>
+            </div>
+            <DropDown option1={"Edit Comment"} option2={"Delete Comment"} className="size-7 text-gray-400 hover:bg-gray-200 -mt-7" />
+
             </div>
             <div className="comment-btns flex items-center gap-2 text-gray-500 mt-1 ml-1">
             <span>{new Date(commentInfo.createdAt).toLocaleString()}</span>

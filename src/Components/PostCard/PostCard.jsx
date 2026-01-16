@@ -9,8 +9,48 @@ import {
     import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
     import CommentCard from "../CommentCard/CommentCard";
     import { Link } from "react-router";
+    import { useRef, useState } from "react";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../assets/Context/Auth.context/Auth.context";
+import DropDown from "../DropDown/DropDown";
 
-    export default function PostCard({ postInfo, commentsLimit = 3 }) {
+
+    export default function  PostCard({ postInfo, commentsLimit = 3 }) {
+
+
+        const [newComment, setNewComment] = useState("");
+        const [comments , setComments] = useState(postInfo.comments || [])
+        const {token}= useContext(AuthContext);
+        const commentInputRef = useRef(null);
+
+
+        async function addComment(e) {
+        try {
+            e.preventDefault();
+            const options = {
+                url: 'https://linked-posts.routemisr.com/comments',
+                method: 'POST',
+                headers: {token},
+                data: {
+                    content: newComment,
+                    post: postInfo.id
+                }
+
+            }
+            const {data} = await axios.request(options);
+            console.log(data);
+            if(data.message == 'success'){
+                setComments(data.comments);
+                setNewComment("");
+                
+            }
+        } catch (error) {
+            console.log(error);
+        }
+            
+        }
+
     return (
         <>
         <div className="post-card space-y-5 bg-white p-7 rounded-2xl shadow-xl">
@@ -30,12 +70,7 @@ import {
                 </time>
                 </div>
             </div>
-            <button>
-                <FontAwesomeIcon
-                icon={faEllipsisVertical}
-                className="cursor-pointer"
-                />
-            </button>
+                <DropDown option1={"Edit Post"} option2={"Delete Post"} />
             </header>
 
             <figure className="post-info">
@@ -65,7 +100,7 @@ import {
                 </div>
                 <span>0 likes</span>
             </div>
-            <span>{postInfo.comments.length} comments</span>
+            <span>{comments.length} comments</span>
             </div>
 
             <div className="action-btns -mx-7 flex items-center *:grow text-lg text-gray-700 *:cursor-pointer border-y border-gray-400/30 py-3">
@@ -73,7 +108,15 @@ import {
                 <FontAwesomeIcon icon={faThumbUpRegular} />
                 <span>Like</span>
             </button>
-            <button className="hover:text-green-700 transition-colors duration-200 hover:scale-105 ">
+            <button
+                onClick={() => {
+                    commentInputRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                    });
+                    commentInputRef.current?.focus();
+                }}
+                className="hover:text-green-700 transition-colors duration-200 hover:scale-105 ">
                 <FontAwesomeIcon icon={faComment} />
                 <span>Comment</span>
             </button>
@@ -83,20 +126,51 @@ import {
             </button>
             </div>
 
+            {/* ADD COMMENT */}
+            <div className="flex items-start gap-1 pt-4">
+            <img
+                src={postInfo.user.photo}
+                alt="user"
+                className="size-10 rounded-full mt-1"
+            />
+            <form className="w-full" onSubmit={addComment}>
+            <div className="grow relative">
+                <input
+                type="text"
+                ref={commentInputRef}
+                placeholder="Write a comment..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                className="w-full bg-gray-100 rounded-full px-5 pr-15 py-3 outline-none focus:bg-gray-200 transition"
+                />
+
+                {newComment && (
+                <button
+                    type="submit"
+                    className=" cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 font-semibold hover:scale-105 transition"
+                >
+                    Post
+                </button>
+                )}
+            </div>
+            </form>
+            </div>
+
+
             <div className="comments ">
-            {postInfo.comments.length > 0 ? (
+            {comments.length > 0 ? (
                 <>
                 <div className="all-comments space-y-3">
-                    {postInfo.comments.slice(0, commentsLimit).map((comment) => (
+                    {comments.slice(0, commentsLimit).map((comment) => (
                     <CommentCard key={comment._id} commentInfo={comment} />
                     ))}
                 </div>
-                {postInfo.comments.length > commentsLimit && (
+                {comments.length > commentsLimit && (
                     <Link
                     to={`/post/${postInfo.id}`}
                     className=" text-gray-600 cursor-pointer border-b-2 border-transparent hover:border-gray-500 transition-colors duration-200  mt-7"
                 >
-                    Show all comments ({postInfo.comments.length - commentsLimit})
+                    Show all comments ({comments.length - commentsLimit})
                 </Link>
                 )}
                 </>
