@@ -12,12 +12,11 @@
     import * as yup from "yup";
     import axios from "axios";
     import { toast } from "react-toastify";
-    // import usePost from "../../assets/Hooks/usePost";
 
     export default function PostUpload({ getAllPosts }) {
     const { token } = useContext(AuthContext);
     const [previewImage, setPreviewImage] = useState(null);
-    // const {getAllPosts} = usePost()
+    
 
     const validationSchema = yup.object({
         body: yup
@@ -62,13 +61,13 @@
             data: formData,
         };
         const { data } = await axios.request(options);
-        console.log(data);
-        if (data.message == "success") {
-            toast.success("Post created successfully");
-            formik.resetForm();
-            getAllPosts();
-            setPreviewImage(null);
-        }
+        // console.log(data);
+        if (data.message === "success") {
+        toast.success("Post created successfully");
+        getAllPosts();
+        formik.resetForm();
+        setPreviewImage(null);
+    }
         } catch (error) {
         toast.error("Failed to create a post");
         console.log(error);

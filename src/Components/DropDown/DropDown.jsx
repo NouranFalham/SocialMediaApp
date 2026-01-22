@@ -8,7 +8,7 @@ import {
     Button,
     } from "@heroui/react";
 
-    export default function DropDown({ option1, option2, className }) {
+    export default function DropDown({ option1, option2, className , onDelete ,onEdit }) {
     return (
         <Dropdown placement="bottom-end">
         <DropdownTrigger>
@@ -30,6 +30,7 @@ import {
             <DropdownItem
             key="edit"
             className="text-sm hover:bg-gray-200 rounded-lg transition-colors duration-200"
+            onClick={onEdit}
             > 
             {option1}
             </DropdownItem>
@@ -37,7 +38,8 @@ import {
             <DropdownItem
             key="delete"
             color="danger"
-            className="text-sm rounded-lg hover:bg-gray-200 transition-colors duration-200"
+            className="text-red-500 text-sm rounded-lg hover:bg-gray-200 transition-colors duration-200"
+            onClick={onDelete}
             >
             {option2}
             </DropdownItem>

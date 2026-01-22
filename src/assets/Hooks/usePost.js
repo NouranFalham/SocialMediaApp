@@ -1,22 +1,23 @@
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../Context/Auth.context/Auth.context"
 import axios from "axios"
+import { data } from "react-router"
 
 export default function usePost() {
 
     const {token} = useContext(AuthContext)
-    const [posts, setPosts] = useState(null)
+    const [posts, setPosts] = useState([])
 
     async function getAllPosts(){
 
         try {
             const options = {
-                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=101',
+                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=110',
                 method: 'GET',
                 headers: {token}
             }
             const {data}= await axios.request(options)
-            // console.log(data)
+            console.log(data)
             setPosts(data.posts.reverse())
         } catch (error) {
             console.log(error)
@@ -27,5 +28,7 @@ export default function usePost() {
         getAllPosts()
     },[])
 
-    return {posts, getAllPosts}
+    
+
+    return {posts, setPosts, getAllPosts}
 }

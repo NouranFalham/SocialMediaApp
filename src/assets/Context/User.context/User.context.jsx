@@ -19,7 +19,7 @@ export default function UserContextProvider({children}){
                 headers: {token}
             }
             const {data} = await axios.request(options)
-            console.log(data)
+            // console.log(data)
             setUser(data.user)
             }
             
