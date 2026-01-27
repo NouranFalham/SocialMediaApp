@@ -5,7 +5,6 @@ import {
   faEnvelope,
   faCalendar,
   faVenusMars,
-  faLock,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
