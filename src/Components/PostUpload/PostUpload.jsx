@@ -12,10 +12,12 @@
     import * as yup from "yup";
     import axios from "axios";
     import { toast } from "react-toastify";
+import { UserContext } from "../../assets/Context/User.context/User.context";
 
     export default function PostUpload({ getAllPosts }) {
     const { token } = useContext(AuthContext);
     const [previewImage, setPreviewImage] = useState(null);
+    const { user } = useContext(UserContext);
     
 
     const validationSchema = yup.object({
@@ -92,7 +94,7 @@
             <header className="flex items-center gap-2">
                 <div className="avatar rounded-full border-2 border-gray-500/20">
                 <img
-                    src="https://img.freepik.com/premium-vector/school-teacher-education-children-class-knowledge-student-vector-illustration-teaching-pos_1013341-459381.jpg"
+                    src={user?.photo}
                     alt="user"
                     className="size-12 rounded-full"
                 />

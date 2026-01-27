@@ -12,12 +12,12 @@ export default function usePost() {
 
         try {
             const options = {
-                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=110',
+                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=114',
                 method: 'GET',
                 headers: {token}
             }
             const {data}= await axios.request(options)
-            console.log(data)
+            // console.log(data)
             setPosts(data.posts.reverse())
         } catch (error) {
             console.log(error)

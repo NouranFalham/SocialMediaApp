@@ -128,7 +128,7 @@ const [previewImage, setPreviewImage] = useState(postInfo.image);
                 </time>
                 </div>
             </div>
-                {user._id === postInfo.user._id && <DropDown   onEdit={() => setIsEditingPost(true)} onDelete={handleDelete}  option1={"Edit Post"} option2={"Delete Post"} />}
+                {user?._id === postInfo.user?._id && <DropDown   onEdit={() => setIsEditingPost(true)} onDelete={handleDelete}  option1={"Edit Post"} option2={"Delete Post"} />}
             </header>
 
             <figure className="post-info">

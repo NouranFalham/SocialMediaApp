@@ -8,8 +8,11 @@ import {
     faChartLine,
 
 } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { UserContext } from "../../assets/Context/User.context/User.context";
 
 export default function LeftSidebar() {
+    const {user} = useContext(UserContext)
     return (
         <div className="space-y-6 sticky top-24">
 
@@ -21,14 +24,14 @@ export default function LeftSidebar() {
 
                 <div className="p-5 -mt-10 text-center">
                     <img
-                        src="https://img.freepik.com/premium-vector/school-teacher-education-children-class-knowledge-student-vector-illustration-teaching-pos_1013341-459381.jpg"
+                        src={user?.photo}
                         className="size-20 rounded-full mx-auto border-4 border-white"
                         alt="user"
                     />
 
                     <div className="flex justify-center items-center gap-2 mt-2">
                         <h3 className="font-semibold text-lg">
-                            Nouran Mohamed
+                            {user?.name}
                         </h3>
                     </div>
 

@@ -4,13 +4,13 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/Signup/SignUp";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import PostDetailsPage from "./pages/PostDetailsPage/PostDetailsPage";
 import NotFound from "./pages/NotFound/NotFound";
 import AuthProvider from "./assets/Context/Auth.context/Auth.context";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import AuthRoute from "./Components/AuthRoute/AuthRoute";
 import UserContextProvider from "./assets/Context/User.context/User.context";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
 
@@ -19,8 +19,8 @@ function App() {
     {path:"/login", element:  <AuthRoute> <Login/> </AuthRoute> },
     {path:"/signup", element:  <SignUp/>  },
     // {path:"/signup", element: <AuthRoute> <SignUp/> </AuthRoute> },
-    {path:"/profile", element:<ProtectedRoute> <ProfilePage/> </ProtectedRoute>},
     {path:"/post/:id", element:<ProtectedRoute> <PostDetailsPage/> </ProtectedRoute>},
+    {path: "/profile", element: <ProtectedRoute><Profile /></ProtectedRoute>},
     {path:"*", element: <NotFound/>}
   ])
   return (

@@ -30,7 +30,7 @@ export default function UserContextProvider({children}){
     useEffect(()=>{
         getUserData()},[token]
     )
-    return <UserContext.Provider value={{user, setUser}}>
+    return <UserContext.Provider value={{user, setUser, getUserData}}>
                 {children} 
             </UserContext.Provider>
 }
