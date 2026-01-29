@@ -14,7 +14,7 @@
     import { toast } from "react-toastify";
 import { UserContext } from "../../assets/Context/User.context/User.context";
 
-    export default function PostUpload({ getAllPosts }) {
+    export default function PostUpload({ getAllPosts, getMyPosts}) {
     const { token } = useContext(AuthContext);
     const [previewImage, setPreviewImage] = useState(null);
     const { user } = useContext(UserContext);
@@ -66,7 +66,8 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
         // console.log(data);
         if (data.message === "success") {
         toast.success("Post created successfully");
-        getAllPosts();
+        if (getAllPosts) getAllPosts();
+        if (getMyPosts) getMyPosts();
         formik.resetForm();
         setPreviewImage(null);
     }

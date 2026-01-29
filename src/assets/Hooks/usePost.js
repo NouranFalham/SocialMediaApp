@@ -6,13 +6,13 @@ import { data } from "react-router"
 export default function usePost() {
 
     const {token} = useContext(AuthContext)
-    const [posts, setPosts] = useState([])
+    const [posts, setPosts] = useState(null)
 
     async function getAllPosts(){
 
         try {
             const options = {
-                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=114',
+                url: 'https://linked-posts.routemisr.com/posts?limit=50&page=117',
                 method: 'GET',
                 headers: {token}
             }

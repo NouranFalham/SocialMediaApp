@@ -79,8 +79,6 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
     );
     }
 
-    /* ---------- Small Components ---------- */
-
     function IconButton({ icon, badge }) {
     return (
         <button

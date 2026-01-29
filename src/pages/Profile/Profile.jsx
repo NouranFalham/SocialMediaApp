@@ -17,9 +17,13 @@ import { useNavigate } from "react-router";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import PostCardSkeleton from "../../Components/Skeleton/PostCardSkeleton";
+import PostUpload from "../../Components/PostUpload/PostUpload";
+
+
 
 function PasswordInput({ placeholder, value, onChange }) {
     const [show, setShow] = useState(false);
+
   return (
     <div className="relative mb-3">
       <input
@@ -42,7 +46,7 @@ function PasswordInput({ placeholder, value, onChange }) {
   );
 }
 export default function Profile() {
-  const { user , setUser, getUserData } = useContext(UserContext);
+  const { user , getUserData } = useContext(UserContext);
   const {token} = useContext(AuthContext);
   const navigate = useNavigate();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -51,6 +55,62 @@ export default function Profile() {
   const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
   const {logout} = useContext(AuthContext)
   const [myPosts, setMyPosts] = useState(null);
+
+  async function deletePost(postId) {
+  try {
+    const options = {
+      url: `https://linked-posts.routemisr.com/posts/${postId}`,
+      method: "DELETE",
+      headers: { token },
+    };
+    const { data } = await axios.request(options);
+
+    if (data.message === "success") {
+      setMyPosts((old) => old.filter((p) => p.id !== postId));
+      toast.success("Post deleted");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to delete post");
+  }
+}
+async function updatePost(postId, updatedData) {
+  try {
+    const formData = new FormData();
+    formData.append("body", updatedData.body);
+
+    if (updatedData.image) {
+      formData.append("image", updatedData.image);
+    }
+
+    const options = {
+      url: `https://linked-posts.routemisr.com/posts/${postId}`,
+      method: "PUT",
+      headers: { token },
+      data: formData,
+    };
+
+    const { data } = await axios.request(options);
+
+    if (data.message === "success") {
+      setMyPosts((oldPosts) =>
+        oldPosts.map((post) =>
+          post.id === postId
+            ? { ...post,  
+            body: data.post.body,  
+            image: data.post.image ?? post.image,
+            updatedAt: data.post.updatedAt,
+            user: post.user,  }
+            : post
+        )
+      );
+      toast.success("Post updated");
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to update post");
+  }
+}
   
 
 
@@ -143,14 +203,14 @@ function AboutRow({ icon, label, value }) {
   async function getMyPosts() {
     try {
       const options = {
-        url: `https://linked-posts.routemisr.com/users/${user._id}/posts?limit=10`,
+        url: `https://linked-posts.routemisr.com/users/${user._id}/posts?limit=50`,
         method: "GET",
         headers: { token },
       }
       const {data} = await axios.request(options)
       if(data.message === 'success'){
         // console.log(data);
-        setMyPosts(data.posts)
+        setMyPosts(data.posts.reverse())
       }
     } catch (error) {
       console.log(error);
@@ -164,136 +224,156 @@ function AboutRow({ icon, label, value }) {
   }, [user])
 
   return (
-    <div className="py-10 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative">
-      <section className="container mx-auto px-4 max-w-4xl space-y-8">
-                  <button
-            onClick={() => navigate("/")}
-            className="cursor-pointer absolute left-6 top-6 size-14 rounded-full
-            bg-white shadow-md flex items-center justify-center
-            hover:bg-blue-50 transition fixed"
-          >
-            <FontAwesomeIcon icon={faArrowLeft} className="text-blue-600 text-xl" />
-          </button>
+  <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-slate-100 py-10">
+    {/* Back Button */}
+    <button
+      onClick={() => navigate("/")}
+      className="fixed top-10 left-10 z-50 size-15 rounded-full
+      bg-white shadow-lg flex items-center justify-center
+      hover:bg-indigo-50 transition cursor-pointer"
+    >
+      <FontAwesomeIcon icon={faArrowLeft} className="text-indigo-600 text-xl" />
+    </button>
 
-        {/* ===== PROFILE HEADER ===== */}
-        <div className="bg-white/80 backdrop-blur rounded-2xl shadow-sm p-6 flex flex-col sm:flex-row gap-6 items-center border border-blue-100 ">
+    <section className="max-w-2xl mx-auto px-4 space-y-10">
 
+      {/* ===== PROFILE HERO ===== */}
+      <div className="relative rounded-3xl bg-white shadow-xl overflow-hidden">
+        <div className="h-32 bg-gradient-to-r from-indigo-500 to-blue-500" />
 
-          {/* Avatar */}
+        {/* Profile Content */}
+        <div className="px-6 pb-6 -mt-14 flex flex-col sm:flex-row gap-6 items-center sm:items-end">
           <div className="relative group shrink-0">
             <img
               src={user?.photo}
               alt="profile"
-              className="size-24 rounded-full object-cover border-2 border-blue-200"
+              className="size-32 rounded-full object-cover border-4 border-white shadow-lg"
             />
+            <label
+              htmlFor="profile-upload"
+              className="absolute inset-0 rounded-full bg-black/40 opacity-0
+              group-hover:opacity-100 transition flex items-center justify-center cursor-pointer"
+            >
+              <FontAwesomeIcon icon={faCamera} className="text-white text-xl" />
+            </label>
+            <input
+              type="file"
+              id="profile-upload"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                if (file.size > 4 * 1024 * 1024) {
+                  toast.error("Max file size is 4MB");
+                  return;
+                }
+                uploadProfilePicture(file);
+              }}
+            />
+          </div>
 
-              <label
-                htmlFor="profile-upload"
-                className="absolute inset-0 rounded-full bg-blue-600/40 opacity-0
-                group-hover:opacity-100 transition flex items-center justify-center
-                cursor-pointer"
-                >
-                  <FontAwesomeIcon icon={faCamera} className="text-white text-lg" />
-              </label>
-
-  {/* File input, now visible to label click */}
-  <input
-    type="file"
-    id="profile-upload"
-    accept="image/*"
-    className="hidden"
-    onChange={(e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      if (file.size > 4 * 1024 * 1024) {
-        toast.error("Max file size is 4MB");
-        return;
-      }
-
-      uploadProfilePicture(file);
-    }}
-  />
-  </div>
-
-          {/* Basic Info */}
+          {/* User Info */}
           <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-lg font-semibold text-slate-800 flex items-center gap-2 justify-center sm:justify-start">
-              <FontAwesomeIcon icon={faUser} className="text-blue-500" />
+            <h1 className="text-xl font-semibold text-slate-800 flex items-center gap-2 justify-center sm:justify-start">
+              <FontAwesomeIcon icon={faUser} className="text-indigo-500" />
               {user?.name}
             </h1>
-
-            <p className="text-slate-500 text-sm flex items-center justify-center sm:justify-start gap-2 mt-1">
-              <FontAwesomeIcon icon={faEnvelope} className="text-blue-500" />
+            <p className="text-slate-500 text-sm flex items-center gap-2 justify-center sm:justify-start mt-1">
+              <FontAwesomeIcon icon={faEnvelope} className="text-indigo-400" />
               {user?.email}
             </p>
           </div>
         </div>
+      </div>
 
-        {/* ===== ABOUT + SECURITY ===== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* ===== INFO GRID ===== */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-          {/* About */}
-          <div className="rounded-2xl p-5 bg-gradient-to-br from-blue-100 to-blue-50 border border-blue-200 shadow-sm">
-            <h3 className="font-medium text-blue-700 mb-4">
-              About
-            </h3>
+        {/* About */}
+        <div className="bg-white rounded-2xl shadow-md p-6">
+          <h3 className="text-indigo-600 font-medium mb-5">
+            Personal Information
+          </h3>
 
-            <AboutRow
-              icon={faCalendar}
-              label="Date of birth"
-              value={user?.dateOfBirth}
-            />
-
-            <AboutRow
-              icon={faVenusMars}
-              label="Gender"
-              value={user?.gender}
-            />
-          </div>
-
-          {/* Security */}
-          <div className="rounded-2xl p-5 bg-white/80 backdrop-blur border border-indigo-100 shadow-sm">
-            <h3 className="font-medium text-indigo-700 mb-4">
-              Security
-            </h3>
-
-            <PasswordInput placeholder="Current password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-            <PasswordInput placeholder="New password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-            <PasswordInput placeholder="Confirm new password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
-
-            <button
-              onClick={changePassword}
-              className="w-full mt-4 py-2 rounded-xl bg-indigo-500 text-white
-              text-sm font-medium hover:bg-indigo-600 transition cursor-pointer"
-            >
-              Update Password
-            </button>
-          </div>
+          <AboutRow
+            icon={faCalendar}
+            label="Date of birth"
+            value={user?.dateOfBirth}
+          />
+          <AboutRow
+            icon={faVenusMars}
+            label="Gender"
+            value={user?.gender}
+          />
         </div>
 
-        {/* ===== POSTS ===== */}
-        <div className="space-y-6">
-          <h2 className="text-lg font-medium text-indigo-700">
-            My Posts
-          </h2>
+        {/* Security */}
+        <div className="bg-white rounded-2xl shadow-md p-6">
+          <h3 className="text-indigo-600 font-medium mb-5">
+            Account Security
+          </h3>
 
-          
-          {
-            myPosts? 
-            myPosts.length > 0 ? (myPosts.map((post)=> <PostCard  key={post.id}
-        postInfo={post}/>)):(<p className="text-gray-500 text-center">
-      You haven’t posted anything yet.
-    </p>)
-            :
-            <PostCardSkeleton/>
-          }
+          <PasswordInput
+            placeholder="Current password"
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
+          />
+          <PasswordInput
+            placeholder="New password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <PasswordInput
+            placeholder="Confirm new password"
+            value={confirmNewPassword}
+            onChange={(e) => setConfirmNewPassword(e.target.value)}
+          />
+
+          <button
+            onClick={changePassword}
+            className="w-full mt-4 py-2 rounded-xl bg-indigo-500 text-white
+            text-sm font-medium hover:bg-indigo-600 transition cursor-pointer"
+          >
+            Change Password
+          </button>
         </div>
+      </div>
 
-      </section>
-    </div>
-          );
+      {/* ===== CREATE POST ===== */}
+      <div className="space-y-6">
+        <PostUpload getMyPosts={getMyPosts} />
+      </div>
+
+      {/* ===== POSTS FEED ===== */}
+      <div className="space-y-6">
+        <h2 className="text-lg font-semibold text-indigo-700">
+          Your Posts
+        </h2>
+
+        {myPosts ? (
+          myPosts.length > 0 ? (
+            myPosts.map((post) => (
+              <PostCard
+                key={post.id}
+                postInfo={post}
+                onDeletePost={deletePost}
+                onUpdatePost={updatePost}
+              />
+            ))
+          ) : (
+            <p className="text-center text-slate-500">
+              You haven’t posted anything yet.
+            </p>
+          )
+        ) : (
+          <PostCardSkeleton />
+        )}
+      </div>
+
+    </section>
+  </div>
+);
+
 }
-
-
 

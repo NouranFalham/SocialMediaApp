@@ -135,7 +135,7 @@ export default function RightSidebar() {
 const friendRequests = [
     {
         id: 1,
-        name: "Mariam Salah",
+        name: "Ahmed Salah",
         mutual: 2,
         avatar: "https://i.pravatar.cc/100?img=11",
     },
@@ -156,7 +156,7 @@ const connections = [
     },
     {
         id: 2,
-        name: "Khaled Amin",
+        name: "Yara Amin",
         status: "away",
         avatar: "https://i.pravatar.cc/100?img=21",
     },

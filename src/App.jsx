@@ -12,6 +12,7 @@ import AuthRoute from "./Components/AuthRoute/AuthRoute";
 import UserContextProvider from "./assets/Context/User.context/User.context";
 import Profile from "./pages/Profile/Profile";
 
+
 function App() {
 
   const router =createBrowserRouter([
@@ -25,7 +26,7 @@ function App() {
   ])
   return (
     <>
-      <AuthProvider>
+        <AuthProvider>
         <UserContextProvider>
         <RouterProvider router={router}/>
         <ToastContainer

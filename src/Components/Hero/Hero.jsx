@@ -70,11 +70,11 @@ export default function Hero({title , description}) {
         <div className="signUpHero text-white flex flex-col justify-between px-8 pt-2">
             <header>
             <h1>
-                <Link className="flex items-center gap-3" to="/">
+                <Link className="flex items-center gap-1" to="/">
                 <span className="size-10 text-lg flex items-center justify-center bg-white/40 rounded-xl  ">
                     <FontAwesomeIcon icon={faSitrox} />
                 </span>
-                <span className="text-2xl font-bold">SocialSphere</span>
+                <span className="text-2xl font-bold">ocialSphere</span>
                 </Link>
             </h1>
             </header>

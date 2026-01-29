@@ -29,9 +29,9 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
         const {user} = useContext(UserContext);
 
         const [isEditingPost, setIsEditingPost] = useState(false);
-const [editedBody, setEditedBody] = useState(postInfo.body);
-const [editedImage, setEditedImage] = useState(null);
-const [previewImage, setPreviewImage] = useState(postInfo.image);
+        const [editedBody, setEditedBody] = useState(postInfo.body);
+        const [editedImage, setEditedImage] = useState(null);
+        const [previewImage, setPreviewImage] = useState(postInfo.image);
 
 
         async function addComment(e) {
@@ -98,6 +98,30 @@ const [previewImage, setPreviewImage] = useState(postInfo.image);
             }
         }
 
+        function timeAgo(dateString) {
+        const date = new Date(dateString);
+        const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
+
+        const intervals = [
+            { label: "year", seconds: 31536000 },
+            { label: "month", seconds: 2592000 },
+            { label: "day", seconds: 86400 },
+            { label: "hour", seconds: 3600 },
+            { label: "minute", seconds: 60 },
+        ];
+
+        for (let i = 0; i < intervals.length; i++) {
+            const count = Math.floor(seconds / intervals[i].seconds);
+
+            if (count >= 1) {
+            return `${count} ${intervals[i].label}${count > 1 ? "s" : ""} ago`;
+            }
+        }
+
+        return "Just now";
+        }
+
+
         async function handleUpdatePost() {
     await onUpdatePost(postInfo.id, {
         body: editedBody,
@@ -123,7 +147,7 @@ const [previewImage, setPreviewImage] = useState(postInfo.image);
                 <h3 className="font-semibold">{postInfo.user.name}</h3>
                 <time className="block text-sm text-gray-600 -m-1 cursor-pointer">
                     <Link to={`/post/${postInfo.id}`}>
-                    {new Date(postInfo.createdAt).toLocaleString()}
+                    {timeAgo(postInfo.createdAt)}
                     </Link>
                 </time>
                 </div>
