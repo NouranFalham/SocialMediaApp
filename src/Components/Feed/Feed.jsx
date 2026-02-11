@@ -1,17 +1,15 @@
-
 import usePost from "../../assets/Hooks/usePost";
 import PostCard from "../PostCard/PostCard";
 import PostCardSkeleton from "../Skeleton/PostCardSkeleton";
 
 export default function Feed({ allPosts , onDeletePost, onUpdatePost}) {
 
-   
     return (
         <>
         
             <section className="py-10 px-5">
                 <div className="container mx-auto max-w-2xl">
-                    <h2 className="text-2xl font-semibold text-gray-600">Latest Posts</h2>
+                    <h2 className="text-2xl font-semibold text-gray-600 dark:text-gray-100">Latest Posts</h2>
                     <div className="all-posts py-5 space-y-8">
                         {allPosts? <div className="space-y-8">
                             {
@@ -30,3 +28,4 @@ export default function Feed({ allPosts , onDeletePost, onUpdatePost}) {
         </>
     )
 }
+

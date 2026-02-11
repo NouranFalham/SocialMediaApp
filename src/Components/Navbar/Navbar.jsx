@@ -10,6 +10,7 @@ import {
 import { AuthContext } from "../../assets/Context/Auth.context/Auth.context";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../assets/Context/User.context/User.context";
+import DarkToggle from "../DarkMode/DarkMode";
 
     export default function Navbar() {
     const [open, setOpen] = useState(false);
@@ -19,14 +20,15 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
 
 
     return (
-        <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50 h-16" >
+        <nav className="fixed top-0 left-0 w-full bg-white shadow-md z-50 h-16 dark:bg-gray-900
+        dark:shadow-gray-800" >
         <div className="container mx-auto px-4">
             <div className="h-16 flex items-center justify-between">
 
             {/* Logo */}
             <div className="flex items-center  text-blue-600">
                 <FontAwesomeIcon icon={faSitrox} className="text-3xl" />
-                <span className="text-2xl font-bold text-gray-800">
+                <span className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                 ocialSphere
                 </span>
             </div>
@@ -34,6 +36,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
             {/* Actions */}
             <div className="flex items-center gap-4">
 
+                <DarkToggle/>
                 {/* Notifications */}
                 <IconButton icon={faBell} badge />
 
@@ -52,9 +55,9 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
 
                 {/* Dropdown */}
                 {open && (
-                    <div className="absolute right-0 mt-3 w-44 bg-white rounded-xl shadow-lg overflow-hidden z-50">
+                    <div className="absolute right-0 mt-3 w-44 bg-white rounded-xl shadow-lg overflow-hidden z-50 dark:bg-gray-800">
                     <button onClick={() => navigate("/profile")} 
-                    className="cursor-pointer flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-600 hover:bg-gray-100">
+                    className="cursor-pointer flex items-center gap-3 w-full px-4 py-3 text-sm text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
                         <FontAwesomeIcon icon={faUser} />
                         Profile
                     </button>
@@ -64,7 +67,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                             logout()
                             navigate ("/login");
                         }
-                    } className="cursor-pointer flex items-center gap-3 w-full px-4 py-3 text-sm text-red-500 hover:bg-gray-100">
+                    } className="cursor-pointer flex items-center gap-3 w-full px-4 py-3 text-sm text-red-500 hover:bg-gray-100 dark:hover:bg-gray-700">
                         <FontAwesomeIcon icon={faRightFromBracket} />
                         Logout
                     </button>
@@ -82,8 +85,8 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
     function IconButton({ icon, badge }) {
     return (
         <button
-        className="relative size-10 rounded-full bg-gray-100 text-gray-600
-        hover:bg-blue-50 hover:text-blue-600 transition flex items-center justify-center"
+        className="relative size-10 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300
+        hover:bg-blue-50 dark:hover:bg-gray-700 hover:text-blue-600 transition flex items-center justify-center"
         >
         <FontAwesomeIcon icon={icon} />
 

@@ -15,7 +15,7 @@ import {
             <Button
             isIconOnly
             variant="light"
-            className={`rounded-full hover:bg-gray-100 ${className}`}
+            className={`rounded-full hover:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-600 ${className}`}
             >
             <FontAwesomeIcon icon={faEllipsisVertical} />
             </Button>
@@ -24,12 +24,12 @@ import {
         <DropdownMenu
             aria-label="Post Actions"
             classNames={{
-            base: "w-44 rounded-xl shadow-lg bg-gray-50 border border-gray-200 ",
+            base: "w-44 rounded-xl shadow-lg bg-gray-50 border border-gray-200 dark:bg-gray-800 dark:border-gray-800 ",
             }}
         >
             <DropdownItem
             key="edit"
-            className="text-sm hover:bg-gray-200 rounded-lg transition-colors duration-200"
+            className="text-sm hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-100 rounded-lg transition-colors duration-200"
             onClick={onEdit}
             > 
             {option1}
@@ -38,7 +38,7 @@ import {
             <DropdownItem
             key="delete"
             color="danger"
-            className="text-red-500 text-sm rounded-lg hover:bg-gray-200 transition-colors duration-200"
+            className="text-red-500 text-sm rounded-lg dark:hover:bg-gray-600 dark:text-red-400 hover:bg-gray-200 transition-colors duration-200"
             onClick={onDelete}
             >
             {option2}

@@ -35,7 +35,7 @@ export default function FormInput({
             return (
                 <textarea
                 placeholder={placeholder}
-                className={`form-control ${className}`}
+                className={`form-control ${className} `}
                 id={id}
                 name={name}
                 value={value}

@@ -32,13 +32,14 @@ function PasswordInput({ placeholder, value, onChange }) {
         value={value}
         onChange={onChange}
         className="w-full bg-slate-100 rounded-xl px-4 py-2 pr-10
-        outline-none focus:bg-slate-200 transition text-sm"
+        outline-none focus:bg-slate-200 transition text-sm dark:bg-gray-800 dark:focus:bg-gray-700
+        dark:placeholder:text-gray-400 dark:text-gray-100"
       />
       <button
         type="button"
         onClick={() => setShow(!show)}
         className="absolute right-3 top-1/2 -translate-y-1/2
-        text-slate-500 hover:text-indigo-600 transition"
+        text-slate-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition"
       >
         <FontAwesomeIcon className="cursor-pointer" icon={show ? faEye : faEyeSlash} />
       </button>
@@ -116,11 +117,11 @@ async function updatePost(postId, updatedData) {
 
 function AboutRow({ icon, label, value }) {
   return (
-    <div className="flex items-center gap-3 bg-white/60 rounded-xl px-4 py-3 mb-3 shadow-sm">
+    <div className="flex items-center gap-3 bg-white/60 dark:bg-gray-800/60 rounded-xl px-4 py-3 mb-3 shadow-sm">
       <FontAwesomeIcon icon={icon} className="text-blue-500" />
       <div className="text-sm">
-        <p className="text-slate-500">{label}</p>
-        <p className="font-medium text-slate-700">{value}</p>
+        <p className="text-slate-500 dark:text-gray-400">{label}</p>
+        <p className="font-medium text-slate-700 dark:text-gray-200">{value}</p>
       </div>
     </div>
   );
@@ -224,21 +225,21 @@ function AboutRow({ icon, label, value }) {
   }, [user])
 
   return (
-  <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-slate-100 py-10">
+  <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-slate-100 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 py-10 ">
     {/* Back Button */}
     <button
       onClick={() => navigate("/")}
-      className="fixed top-10 left-10 z-50 size-15 rounded-full
-      bg-white shadow-lg flex items-center justify-center
-      hover:bg-indigo-50 transition cursor-pointer"
+      className="mb-4 ms-3 lg:fixed lg:top-10 lg:left-10 z-50 size-15 rounded-full
+      bg-white dark:bg-gray-700  shadow-lg flex items-center justify-center
+      hover:bg-indigo-50 dark:hover:bg-gray-600 transition cursor-pointer"
     >
-      <FontAwesomeIcon icon={faArrowLeft} className="text-indigo-600 text-xl" />
+      <FontAwesomeIcon icon={faArrowLeft} className="text-indigo-600 text-xl dark:text-indigo-400" />
     </button>
 
-    <section className="max-w-2xl mx-auto px-4 space-y-10">
+    <section className="max-w-2xl mx-auto px-4 space-y-10 ">
 
       {/* ===== PROFILE HERO ===== */}
-      <div className="relative rounded-3xl bg-white shadow-xl overflow-hidden">
+      <div className="relative rounded-3xl bg-white  dark:bg-gray-900 shadow-xl overflow-hidden">
         <div className="h-32 bg-gradient-to-r from-indigo-500 to-blue-500" />
 
         {/* Profile Content */}
@@ -275,11 +276,11 @@ function AboutRow({ icon, label, value }) {
 
           {/* User Info */}
           <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-xl font-semibold text-slate-800 flex items-center gap-2 justify-center sm:justify-start">
+            <h1 className="text-xl font-semibold text-slate-800  dark:text-gray-100  flex items-center gap-2 justify-center sm:justify-start">
               <FontAwesomeIcon icon={faUser} className="text-indigo-500" />
               {user?.name}
             </h1>
-            <p className="text-slate-500 text-sm flex items-center gap-2 justify-center sm:justify-start mt-1">
+            <p className="text-slate-500 dark:text-gray-400 text-sm flex items-center gap-2 justify-center sm:justify-start mt-1">
               <FontAwesomeIcon icon={faEnvelope} className="text-indigo-400" />
               {user?.email}
             </p>
@@ -291,8 +292,8 @@ function AboutRow({ icon, label, value }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
         {/* About */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <h3 className="text-indigo-600 font-medium mb-5">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-md p-6">
+          <h3 className="text-indigo-600 dark:text-indigo-400 font-medium mb-5">
             Personal Information
           </h3>
 
@@ -309,8 +310,8 @@ function AboutRow({ icon, label, value }) {
         </div>
 
         {/* Security */}
-        <div className="bg-white rounded-2xl shadow-md p-6">
-          <h3 className="text-indigo-600 font-medium mb-5">
+        <div className="bg-white  dark:bg-gray-900 rounded-2xl shadow-md p-6">
+          <h3 className="text-indigo-600 dark:text-indigo-400 font-medium mb-5">
             Account Security
           </h3>
 
@@ -347,7 +348,7 @@ function AboutRow({ icon, label, value }) {
 
       {/* ===== POSTS FEED ===== */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold text-indigo-700">
+        <h2 className="text-lg font-semibold text-indigo-700 dark:text-indigo-400">
           Your Posts
         </h2>
 
@@ -362,7 +363,7 @@ function AboutRow({ icon, label, value }) {
               />
             ))
           ) : (
-            <p className="text-center text-slate-500">
+            <p className="text-center text-slate-500 dark:text-gray-400">
               You haven’t posted anything yet.
             </p>
           )

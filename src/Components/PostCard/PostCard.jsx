@@ -135,7 +135,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
 
     return (
         <>
-        <div className="post-card space-y-5 bg-white p-7 rounded-2xl shadow-xl">
+        <div className="post-card space-y-5 bg-white dark:bg-gray-800 p-7 rounded-2xl shadow-xl ">
             <header className="flex justify-between items-center">
             <div className="flex gap-3 items-center">
                 <img
@@ -144,8 +144,8 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                 className="size-12 rounded-full"
                 />
                 <div className="">
-                <h3 className="font-semibold">{postInfo.user.name}</h3>
-                <time className="block text-sm text-gray-600 -m-1 cursor-pointer">
+                <h3 className="font-semibold dark:text-gray-100">{postInfo.user.name}</h3>
+                <time className="block text-sm text-gray-600 dark:text-gray-400 -m-1 cursor-pointer">
                     <Link to={`/post/${postInfo.id}`}>
                     {timeAgo(postInfo.createdAt)}
                     </Link>
@@ -157,12 +157,12 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
 
             <figure className="post-info">
             {isEditingPost ? (
-            <div className="border border-gray-300 rounded-xl p-4 bg-gray-50 space-y-3 relative">
+            <div className="border border-gray-300 dark:border-gray-600 rounded-xl p-4 bg-gray-50 dark:bg-gray-700 space-y-3 relative">
                 
                 <textarea
                 value={editedBody}
                 onChange={(e) => setEditedBody(e.target.value)}
-                className="w-full  bg-gray-200/90 border-none rounded-xl p-3 focus:outline-none "
+                className="w-full  bg-gray-200/90 dark:bg-gray-600/90 border-none rounded-xl p-3 focus:outline-none dark:text-gray-100 "
                 
                 />
 
@@ -203,7 +203,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
 
                 <label
             htmlFor="post-image"
-            className="inline-block cursor-pointer px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-sm"
+            className="inline-block cursor-pointer px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 dark:text-gray-200 text-sm"
             >
             Choose image
             </label>
@@ -212,7 +212,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                 <div className="flex justify-end gap-2">
                 <button
                     onClick={() => setIsEditingPost(false)}
-                    className="cursor-pointer px-4 py-1 rounded-lg border border-gray-300 hover:bg-gray-300 transition-colors duration-200"
+                    className="cursor-pointer px-4 py-1 rounded-lg border border-gray-300 hover:bg-gray-300 dark:text-gray-100 dark:border-gray-500 dark:hover:bg-gray-600 transition-colors duration-200"
                 >
                     Cancel
                 </button>
@@ -226,7 +226,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
             </div>
             ) : (
             <>
-                <p>{postInfo.body}</p>
+                <p className="text-gray-900 dark:text-gray-100">{postInfo.body}</p>
                 {postInfo.image && (
                 <img src={postInfo.image} className="w-full rounded-lg" />
                 )}
@@ -234,7 +234,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
             )}
             </figure>
 
-            <div className="reactions flex justify-between items-center text-gray-600">
+            <div className="reactions flex justify-between items-center text-gray-600 dark:text-gray-300">
             <div className="flex items-center gap-2">
                 <div className="icons space-x-1 *:cursor-pointer *:hover:scale-110 *:transition-transform *:duration-200 flex items-center *:size-6 *:flex *:justify-center *:items-center *:rounded-full">
                 <div className="icon bg-blue-500 text-white text-sm">
@@ -249,8 +249,8 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
             <span>{comments.length} comments</span>
             </div>
 
-            <div className="action-btns -mx-7 flex items-center *:grow text-lg text-gray-700 *:cursor-pointer border-y border-gray-400/30 py-3">
-            <button className="hover:text-blue-500 transition-colors duration-200 hover:scale-105 ">
+            <div className="action-btns -mx-7 flex items-center *:grow text-lg text-gray-700 dark:text-gray-200 *:cursor-pointer border-y border-gray-400/30 dark:border-gray-600 py-3">
+            <button className="hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-200 hover:scale-105 ">
                 <FontAwesomeIcon icon={faThumbUpRegular} />
                 <span>Like</span>
             </button>
@@ -262,11 +262,11 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                     });
                     commentInputRef.current?.focus();
                 }}
-                className="hover:text-green-700 transition-colors duration-200 hover:scale-105 ">
+                className="hover:text-green-700 dark:hover:text-green-500 transition-colors duration-200 hover:scale-105 ">
                 <FontAwesomeIcon icon={faComment} />
                 <span>Comment</span>
             </button>
-            <button className="hover:text-red-600 transition-colors duration-200 hover:scale-105 ">
+            <button className="hover:text-red-600 dark:hover:text-red-500 transition-colors duration-200 hover:scale-105 ">
                 <FontAwesomeIcon icon={faShare} />
                 <span>Share</span>
             </button>
@@ -287,13 +287,13 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                 placeholder="Write a comment..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                className="w-full bg-gray-100 rounded-full px-5 pr-15 py-3 outline-none focus:bg-gray-200 transition"
+                className="w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-full px-5 pr-15 py-3 outline-none focus:bg-gray-200 dark:focus:bg-gray-600 transition"
                 />
 
                 {newComment && (
                 <button
                     type="submit"
-                    className=" cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 font-semibold hover:scale-105 transition"
+                    className=" cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-blue-600 dark:text-blue-400 font-semibold hover:scale-105 transition"
                 >
                     Post
                 </button>
@@ -314,7 +314,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                 {comments.length > commentsLimit && (
                     <Link
                     to={`/post/${postInfo.id}`}
-                    className=" text-gray-600 cursor-pointer border-b-2 border-transparent hover:border-gray-500 transition-colors duration-200  mt-7"
+                    className=" text-gray-600 dark:text-gray-400 cursor-pointer border-b-2 border-transparent hover:border-gray-500 dark:hover:border-gray-300 transition-colors duration-200  mt-7"
                 >
                     Show all comments ({comments.length - commentsLimit})
                 </Link>
@@ -322,7 +322,7 @@ import { UserContext } from "../../assets/Context/User.context/User.context";
                 </>
             ) : (
                 <div>
-                <p className="text-center py-2 text-gray-700">
+                <p className="text-center py-2 text-gray-700  dark:text-gray-300">
                     No comments yet. Be the first to comment!
                 </p>
                 </div>

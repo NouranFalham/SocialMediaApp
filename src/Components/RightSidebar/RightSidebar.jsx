@@ -9,14 +9,14 @@ import {
 
 export default function RightSidebar() {
     return (
-        <div className="space-y-6 sticky top-24 ">
+        <div className="space-y-6 sticky top-24">
 
             {/* Connection Requests */}
             <Card title="Connection Requests">
                 {friendRequests.map((user) => (
                     <div
                         key={user.id}
-                        className="flex items-center justify-between mb-4 p-2 rounded-xl hover:bg-gray-50"
+                        className="flex items-center justify-between mb-4 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                         <div className="flex items-center gap-3">
                             <img
@@ -25,10 +25,10 @@ export default function RightSidebar() {
                                 alt={user.name}
                             />
                             <div>
-                                <h4 className="text-sm font-semibold">
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                     {user.name}
                                 </h4>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
                                     {user.mutual} mutual friends
                                 </p>
                             </div>
@@ -43,7 +43,7 @@ export default function RightSidebar() {
                             </button>
 
                             <button
-                                className="size-9 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 transition"
+                                className="size-9 rounded-full bg-gray-200 text-gray-600 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition"
                                 title="Ignore"
                             >
                                 <FontAwesomeIcon icon={faUserXmark} />
@@ -63,7 +63,7 @@ export default function RightSidebar() {
                     {connections.map((user) => (
                         <div
                             key={user.id}
-                            className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50"
+                            className="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700"
                         >
                             <div className="relative">
                                 <img
@@ -72,7 +72,7 @@ export default function RightSidebar() {
                                     alt={user.name}
                                 />
                                 <span
-                                    className={`absolute bottom-0 right-0 size-3 border-2 border-white rounded-full
+                                    className={`absolute bottom-0 right-0 size-3 border-2 border-white dark:border-gray-800 rounded-full
                                     ${user.status === "online" && "bg-green-500"}
                                     ${user.status === "away" && "bg-yellow-400"}
                                     ${user.status === "offline" && "bg-gray-400"}`}
@@ -80,10 +80,10 @@ export default function RightSidebar() {
                             </div>
 
                             <div className="flex-1">
-                                <h4 className="text-sm font-semibold">
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                     {user.name}
                                 </h4>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
                                     {user.status === "online" && "Online"}
                                     {user.status === "away" && "Away"}
                                     {user.status === "offline" && "Offline"}
@@ -99,17 +99,17 @@ export default function RightSidebar() {
                 {popularPosts.map((post) => (
                     <div
                         key={post.id}
-                        className="flex items-start gap-3 mb-4 p-2 rounded-xl hover:bg-gray-50"
+                        className="flex items-start gap-3 mb-4 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
-                        <div className="size-10 rounded-lg bg-orange-100 flex items-center justify-center">
-                            <FontAwesomeIcon icon={faFire} className="text-orange-500" />
+                        <div className="size-10 rounded-lg bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
+                            <FontAwesomeIcon icon={faFire} className="text-orange-500 dark:text-orange-400" />
                         </div>
 
                         <div>
-                            <p className="text-sm font-medium text-gray-700 line-clamp-2">
+                            <p className="text-sm font-medium text-gray-700 dark:text-gray-200 line-clamp-2">
                                 {post.text}
                             </p>
-                            <div className="flex gap-4 text-xs text-gray-500 mt-1">
+                            <div className="flex gap-4 text-xs text-gray-500 dark:text-gray-400 mt-1">
                                 <span>❤️ {post.likes} likes</span>
                                 <span>💬 {post.comments} comments</span>
                             </div>
@@ -120,7 +120,7 @@ export default function RightSidebar() {
 
             {/* From Your Network */}
             <Card title="From Your Network">
-                <ul className="space-y-3 text-sm text-gray-600">
+                <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
                     <li>❤️ Lina Hassan liked your post</li>
                     <li>💬 You replied to Ahmed Samy</li>
                     <li>👤 You connected with Nour Adel</li>
@@ -187,8 +187,8 @@ const popularPosts = [
 
 function Card({ title, children }) {
     return (
-        <div className="bg-white rounded-2xl shadow-lg p-5">
-            <h3 className="font-semibold text-lg mb-4">{title}</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg dark:shadow-gray-700 p-5">
+            <h3 className="font-semibold text-lg mb-4 text-gray-900 dark:text-gray-200">{title}</h3>
             {children}
         </div>
     );

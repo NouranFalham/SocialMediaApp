@@ -11,6 +11,7 @@ import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import AuthRoute from "./Components/AuthRoute/AuthRoute";
 import UserContextProvider from "./assets/Context/User.context/User.context";
 import Profile from "./pages/Profile/Profile";
+import { ThemeProvider } from "./assets/Context/Theme.context/Theme.context";
 
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
   ])
   return (
     <>
+        <ThemeProvider>
+
         <AuthProvider>
         <UserContextProvider>
         <RouterProvider router={router}/>
@@ -44,6 +47,8 @@ function App() {
       />
       </UserContextProvider>
       </AuthProvider>
+
+        </ThemeProvider>
     </>
   );
 }
